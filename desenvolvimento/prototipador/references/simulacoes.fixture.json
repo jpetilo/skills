@@ -1,0 +1,116 @@
+{
+  "natureza": "Entradas sintéticas de avaliação da skill; não descrevem o projeto OKR real nem APIs executadas.",
+  "casos": [
+    {
+      "id": "okr",
+      "entidades": {
+        "empresa": [
+          {
+            "id": "EMP-A",
+            "nome": "Empresa fictícia A"
+          }
+        ],
+        "objetivo": [
+          {
+            "id": "OBJ-E",
+            "empresa_id": "EMP-A",
+            "alinhado_id": null
+          },
+          {
+            "id": "OBJ-T",
+            "empresa_id": "EMP-A",
+            "alinhado_id": "OBJ-E"
+          }
+        ],
+        "kr": [
+          {
+            "id": "KR-E",
+            "objetivo_id": "OBJ-E",
+            "inicial": 0,
+            "atual": 80,
+            "meta": 100
+          },
+          {
+            "id": "KR-A",
+            "objetivo_id": "OBJ-T",
+            "inicial": 20,
+            "atual": 40,
+            "meta": 100
+          },
+          {
+            "id": "KR-B",
+            "objetivo_id": "OBJ-T",
+            "inicial": 0,
+            "atual": 40,
+            "meta": 100
+          }
+        ]
+      },
+      "regra": "Contribuição = min(100,100*(atual-inicial)/(meta-inicial)); objetivo = média dos próprios KRs, sem rollup. Atualização inválida preserva confirmado; cancelar descarta rascunho.",
+      "acao": {
+        "id": "AC-MEDIR",
+        "campo": "resultado_chave.valor_atual",
+        "modalidade": "simulada",
+        "operacao": "OP-MEDIR",
+        "confirmado": 40,
+        "rascunho": 60
+      },
+      "operacoes": [
+        {
+          "id": "OP-MEDIR",
+          "situacao": "proposta",
+          "verificacao": "não executada",
+          "endpoint": null
+        }
+      ],
+      "esperados": {
+        "antes": 32.5,
+        "apos_confirmar_60": 45,
+        "empresarial": 80,
+        "cancelar": 40,
+        "limite_120": 100
+      }
+    },
+    {
+      "id": "biblioteca",
+      "entidades": {
+        "livro": [
+          {
+            "id": "LIV-A",
+            "titulo": "Livro fictício A",
+            "exemplares": 3
+          }
+        ],
+        "emprestimo": [
+          {
+            "id": "EMP-1",
+            "livro_id": "LIV-A",
+            "quantidade": 2
+          }
+        ]
+      },
+      "regra": "Disponíveis = exemplares - soma emprestada. Reserva inteira entre 1 e disponíveis. Rascunho/cancelamento não reduz saldo confirmado; não há login ou exclusão neste recorte.",
+      "acao": {
+        "id": "AC-RESERVAR",
+        "campo": "Reserva.quantidade",
+        "modalidade": "simulada",
+        "operacao": "OP-RESERVAR",
+        "confirmado": 1,
+        "rascunho": 1
+      },
+      "operacoes": [
+        {
+          "id": "OP-RESERVAR",
+          "situacao": "proposta",
+          "verificacao": "não executada",
+          "endpoint": null
+        }
+      ],
+      "esperados": {
+        "disponiveis": 1,
+        "apos_reservar_1": 0,
+        "cancelar": 1
+      }
+    }
+  ]
+}
